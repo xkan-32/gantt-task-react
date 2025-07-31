@@ -217,13 +217,28 @@ export const Calendar: React.FC<CalendarProps> = ({
   const getCalendarValuesForDay = () => {
     const topValues: ReactChild[] = [];
     const bottomValues: ReactChild[] = [];
+    const weekendRects: ReactChild[] = [];
     const topDefaultHeight = headerHeight * 0.5;
     const dates = dateSetup.dates;
+
     for (let i = 0; i < dates.length; i++) {
       const date = dates[i];
-      const bottomValue = `${getLocalDayOfWeek(date, locale, "short")}, ${date
-        .getDate()
-        .toString()}`;
+      const day = date.getDay(); // 0:日曜, 6:土曜
+
+      if (day === 0 || day === 6) {
+        weekendRects.push(
+          <rect
+            key={`weekend-${date.getTime()}`}
+            x={columnWidth * i}
+            y={0}
+            width={columnWidth}
+            height={headerHeight}
+            className={styles.weekendRect}
+          />
+        );
+      }
+
+      const bottomValue = date.getDate().toString(); // 日付のみに変更
 
       bottomValues.push(
         <text
@@ -235,12 +250,12 @@ export const Calendar: React.FC<CalendarProps> = ({
           {bottomValue}
         </text>
       );
+
       if (
         i + 1 !== dates.length &&
         date.getMonth() !== dates[i + 1].getMonth()
       ) {
         const topValue = getLocaleMonth(date, locale);
-
         topValues.push(
           <TopPartOfCalendar
             key={topValue + date.getFullYear()}
@@ -259,7 +274,8 @@ export const Calendar: React.FC<CalendarProps> = ({
         );
       }
     }
-    return [topValues, bottomValues];
+
+    return [topValues, bottomValues, weekendRects];
   };
 
   const getCalendarValuesForPartOfDay = () => {
@@ -357,6 +373,7 @@ export const Calendar: React.FC<CalendarProps> = ({
 
   let topValues: ReactChild[] = [];
   let bottomValues: ReactChild[] = [];
+  let weekendRects: ReactChild[] = [];
   switch (dateSetup.viewMode) {
     case ViewMode.Year:
       [topValues, bottomValues] = getCalendarValuesForYear();
@@ -371,7 +388,7 @@ export const Calendar: React.FC<CalendarProps> = ({
       [topValues, bottomValues] = getCalendarValuesForWeek();
       break;
     case ViewMode.Day:
-      [topValues, bottomValues] = getCalendarValuesForDay();
+      [topValues, bottomValues, weekendRects] = getCalendarValuesForDay();
       break;
     case ViewMode.QuarterDay:
     case ViewMode.HalfDay:
@@ -389,7 +406,9 @@ export const Calendar: React.FC<CalendarProps> = ({
         height={headerHeight}
         className={styles.calendarHeader}
       />
-      {bottomValues} {topValues}
+      {weekendRects}
+      {bottomValues}
+      {topValues}
     </g>
   );
 };

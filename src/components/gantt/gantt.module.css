@@ -19,3 +19,8 @@
   outline: none;
   position: relative;
 }
+
+.ganttWeekend {
+  fill: #eeeeee !important;
+  pointer-events: none;
+}

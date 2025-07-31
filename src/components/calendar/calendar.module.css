@@ -29,3 +29,12 @@
   stroke: #e0e0e0;
   stroke-width: 1.4;
 }
+
+.gantt-weekend {
+  fill: #eeeeee !important; /* SVGの背景が対象 */
+  background-color: #eeeeee !important; /* HTML背景に備えて */
+}
+
+.weekendRect {
+  fill: #f0f0f0; /* 薄いグレー背景 */
+}
