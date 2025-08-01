@@ -2197,6 +2197,7 @@ var TaskGantt = function TaskGantt(_ref) {
       ganttHeight = _ref.ganttHeight,
       scrollY = _ref.scrollY,
       scrollX = _ref.scrollX;
+  console.log("✅ forked TaskGantt loaded!");
   var ganttSVGRef = useRef(null);
   var horizontalContainerRef = useRef(null);
   var verticalGanttContainerRef = useRef(null);

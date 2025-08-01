@@ -2198,6 +2198,7 @@ var TaskGantt = function TaskGantt(_ref) {
       ganttHeight = _ref.ganttHeight,
       scrollY = _ref.scrollY,
       scrollX = _ref.scrollX;
+  console.log("✅ forked TaskGantt loaded!");
   var ganttSVGRef = React.useRef(null);
   var horizontalContainerRef = React.useRef(null);
   var verticalGanttContainerRef = React.useRef(null);
